@@ -1,15 +1,14 @@
-
-var express = require('express'),
-    router = express.Router(),
-    bodyParser = require('body-parser'), //parses information from POST
-    methodOverride = require('method-override'); //used to manipulate POST
+var express         = require('express'),
+    router          = express.Router(),
+    bodyParser      = require('body-parser'), //parses information from POST
+    methodOverride  = require('method-override'); //used to manipulate POST
 
 
 candies = [
-{id: 1, name: "Chewing Gum" , color: "Red"},
-{id: 2, name: "Pez"         , color: "Green"},
-{id: 3, name: "Marshmallow" , color: "Pink"},
-{id: 4, name: "Candy Stick" , color: "Blue"}
+  {id: 1, name: "Chewing Gum" , color: "Red"},
+  {id: 2, name: "Pez"         , color: "Green"},
+  {id: 3, name: "Marshmallow" , color: "Pink"},
+  {id: 4, name: "Candy Stick" , color: "Blue"}
 ]
 
 
@@ -25,9 +24,9 @@ router.route('/')
     res.json(req.body);
   });
 
-// Show a Book
-router.route('/:id').get(function(req,res){
-
+// Show a candy
+router.route('/:id')
+  .get(function(req,res){
     candy = candies.filter(function(element){ return element["id"] == req.params.id })[0]
     res.json(candy)
   })
@@ -40,16 +39,17 @@ router.route('/:id').get(function(req,res){
     res.json({message : 'deleted' });
   });
 
-//Update a book
+//Update a candy
 router.put('/:id/edit', function(req, res) {
   for(i in candies){
     if(candies[i]["id"] == req.params.id){
       candies[i] = req.body
     }
   }
-  res.format({
-    json: function(){ res.json(req.body); }
-  });
+  res.json(req.body);
+  // res.format({
+  //   json: function(){ res.json(req.body); }
+  // });
 });
 
 
